@@ -1,30 +1,47 @@
 import React, { useState } from 'react'
 import { assets } from '../../assets/assets/assets'
+import { useContext } from 'react'
+import { Context } from '../../context/Context'
 
 
 const Sidebar = () => {
+  const{onSent,prevPrompts,setRecentPrompt,Newchat} =useContext(Context)
     const [extended,setExtended]=useState(false)
     const sidebarToggler=()=>{
         setExtended(!extended)
     }
+const loaderPrompt=async(prompt)=>{
+ setRecentPrompt(prompt)
+  await onSent(prompt)
 
+}
 
   return (
 
-    <div className='sidebar min-h-[100vh] inline-flex flex-col justify-between bg-[#f0f4f9] px-6 py-4'>
+    <div className='sidebar hidden min-h-[100vh] sm:inline-flex flex-col justify-between bg-[#f0f4f9] px-6 py-4'>
     <div className='top'>
         <img onClick={sidebarToggler} className='munu w-[20px] block ml-[10px] transition-all duration-100 cursor-pointer' src={assets.menu_icon}/>
-        <div className='newchat inline-flex mt-[50px] items-center gap-[10px] px-[15px] rounded-[50px] py-[10px] bg-[#e6eaf1] border text-[14px] text-gray-50 cursor-pointer'>
+        <div onClick={()=>Newchat()} className='cursor-pointer newchat inline-flex mt-[50px] items-center gap-[10px] px-[15px] rounded-[50px] py-[10px] bg-[#e6eaf1] border text-[14px] text-gray-50 cursor-pointer'>
             <img className='munu w-[20px]' src={assets.plus_icon}/>
           {extended && <p className='text-black'>New Chat</p>}  
         </div>
         {extended ? 
-        <div className="recent flex flex-col  ">
-            <p className='recent title mt-[30npx] mb-[20px]'>Recent history</p>
-            <div className="recent-entry flex items-start gap-[10px] p-[10px] pr-5 border-r-[50px] text-[#282828] cursor-pointer  hover:bg-[#e2e6eb] transition-all duration-100">
+        <div className="recent flex flex-col mt-7 cursor-pointer animate-fade-in" >
+              <p className='recent title mt-[30npx] mb-[20px]'>Recent history</p>
+          
+            {prevPrompts.map((item,index)=>{
+            return(
+                
+               <div onClick={()=>loaderPrompt(item)} key={index} className="recent-entry flex items-start gap-[10px] p-[10px] pr-5 rounded-[50px] text-[#282828] cursor-pointer  hover:bg-[#e2e6eb] transition-all duration-100">
+              
                 <img className='munu w-[20px]'  src={assets.message_icon}/>
-                <p>what is react...</p>
+               <p>{item.slice(0,18)}...</p>
             </div>
+
+            )
+
+            })}
+           
         </div> :null
 }
     </div>

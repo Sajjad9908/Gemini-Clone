@@ -20,17 +20,32 @@ const WordsTyping=(index,nextWord)=>{
 
 }
  
- 
+  const Newchat=()=>{
+    setLoading(false)
+    setShowResult(false)
+  }
     const onSent=async(prompt)=>{
          setResultData('');
         setLoading(true)
         setShowResult(true)
-        setRecentPrompt(input)
+       
+
+   let response;
+    if(prompt !==undefined){
+    
+     response= await main(prompt)
+       setRecentPrompt(prompt)
+    }
+    else{
+      setPrevPrompts(prev=>[...prev,input])
+      setRecentPrompt(input)
+      response=await main(input)
+    }
       
     
-     const responce= await main(input)
-
-    const responceArray=responce.split('**')
+    
+if(response){
+    const responceArray=response.split('**')
     let newArray="";
     for(let i=0; i<responceArray.length;i++){
       if((i=== 0) || (i%2!==1) ){
@@ -46,9 +61,12 @@ const WordsTyping=(index,nextWord)=>{
       const nextWord=ressponceInType[i]
       WordsTyping(i,nextWord+" ")
      }
+    }
+
+    
     setLoading(false)
     setInput('')
-   
+    
        
 
     }
@@ -66,7 +84,7 @@ const WordsTyping=(index,nextWord)=>{
       resultData,
       input,
       setInput,
-
+      Newchat
 
     }
 

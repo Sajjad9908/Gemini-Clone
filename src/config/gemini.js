@@ -2,7 +2,7 @@
 import { GoogleGenAI } from '@google/genai';
 
 // API key
-const apikey = "AIzaSyBo3oQpqoymsS08AsNHAQfu1WOQu-PY4qM "; 
+const apikey = "AIzaSyC5OGdyyuVPECbbvKqpm67UZAbLb3M3eEI"; 
 
 
 // Replace this with your actual API key if needed
