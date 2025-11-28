@@ -93,7 +93,8 @@ const Main = () => {
                <div className='flex items-center gap-4'>
                 <img className='w-[25px] cursor-pointer' src={assets.gallery_icon} alt="" />
                 <img className='w-[25px] cursor-pointer' src={assets.mic_icon} alt="" />
-                 <img onClick={()=>onSent()} className='w-[25px] cursor-pointer' src={assets.send_icon } alt="" />
+                 <img onClick={()=>onSent()} 
+                 className='w-[25px] cursor-pointer' src={assets.send_icon } alt="Send image" />
                   
                </div>
                </div>
