@@ -89,7 +89,7 @@ const Main = () => {
                 if(e.key==='Enter'){
                   onSent()
                 }
-              }} className='flex-1 bg-transparent border-none outline-none p-2 text-[18px]' type='text' placeholder='Enetr Prompt here '/>
+              }} className='flex-1 bg-transparent border-none outline-none p-2 text-[18px]' type='text' placeholder='Enter Prompt here '/>
                <div className='flex items-center gap-4'>
                 <img className='w-[25px] cursor-pointer' src={assets.gallery_icon} alt="" />
                 <img className='w-[25px] cursor-pointer' src={assets.mic_icon} alt="" />
