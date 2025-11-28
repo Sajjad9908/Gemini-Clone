@@ -1,80 +1,152 @@
-import React, { useState } from 'react'
-import { assets } from '../../assets/assets/assets'
-import { useContext } from 'react'
-import { Context } from '../../context/Context'
-
+import React, { useState } from 'react';
+import { assets } from '../../assets/assets/assets';
+import { useContext } from 'react';
+import { Context } from '../../context/Context';
 
 const Sidebar = () => {
-  const{onSent,prevPrompts,setRecentPrompt,Newchat} =useContext(Context)
-    const [extended,setExtended]=useState(false)
-    const [mobileResponsive,setMobileResponsive]=useState(false)
-    const sidebarToggler=()=>{
-        setExtended(!extended)
-    }
-const loaderPrompt=async(prompt)=>{
- setRecentPrompt(prompt)
-  await onSent(prompt)
+  const { onSent, prevPrompts, setRecentPrompt, Newchat } = useContext(Context);
+  const [extended, setExtended] = useState(false);        // For desktop sidebar expand/collapse
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false); // For mobile sidebar visibility
 
-}
-const MobileBarToggler=()=>{
-  setMobileResponsive(!mobileResponsive)
-}
+  const toggleSidebar = () => setExtended(!extended);
+
+  const toggleMobileMenu = () => setMobileMenuOpen(!mobileMenuOpen);
+
+  const loadPrompt = async (prompt) => {
+    setRecentPrompt(prompt);
+    await onSent(prompt);
+    setMobileMenuOpen(false); // Close mobile menu after selecting
+  };
 
   return (
-<>
-    <div className='sidebar hidden min-h-[100vh] sm:inline-flex flex-col justify-between bg-[#f0f4f9] px-6 py-4'>
-    <div className='top'>
-        <img onClick={sidebarToggler} className='munu w-[20px] block ml-[10px] transition-all duration-100 cursor-pointer' src={assets.menu_icon}/>
-        <div onClick={()=>Newchat()} className='newchat inline-flex mt-[50px] items-center gap-[10px] px-[15px] rounded-[50px] py-[10px] bg-[#e6eaf1] border text-[14px] text-gray-50 cursor-pointer'>
-            <img className='munu w-[20px]' src={assets.plus_icon}/>
-          {extended && <p className='text-black'>New Chat</p>}  
+    <>
+      {/* Hamburger Icon - Always visible on mobile */}
+      <div className="sm:hidden fixed top-4 left-4 z-50">
+        <img
+          onClick={toggleMobileMenu}
+          className="w-6 h-6 cursor-pointer"
+          src={assets.menu_icon}
+          alt="menu"
+        />
+      </div>
+
+      {/* Desktop Sidebar - Hidden on mobile */}
+      <div className={`hidden sm:flex flex-col justify-between bg-[#f0f4f9] px-6 py-8 min-h-screen transition-all duration-300 ${extended ? 'w-[200px]' : 'w-20'}`}>
+        <div className="top">
+          <div>
+          <img
+            onClick={toggleSidebar} className={`${mobileMenuOpen? 'none' :'block'} w-5 cursor-pointer mb-12`}
+           
+            src={assets.menu_icon}
+            alt="toggle"
+          />
+          </div>
+
+          <div
+            onClick={() => { Newchat(); setExtended(true); }}
+            className="newchat flex items-center gap-3 px-4 py-3 bg-[#e6eaf1] rounded-full text-gray-600 cursor-pointer hover:bg-gray-200 transition"
+          >
+            <img className="w-5" src={assets.plus_icon} alt="new" />
+            {extended && <p>New Chat</p>}
+          </div>
+
+          {extended && (
+            <div className="recent mt-8 animate-fade-in">
+              <p className="text-sm text-gray-500 mb-3">Recent</p>
+              {prevPrompts.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => loadPrompt(item)}
+                  className="flex items-center gap-3 p-3 rounded-full hover:bg-[#e2e6eb] cursor-pointer transition"
+                >
+                  <img className="w-5" src={assets.message_icon} alt="msg" />
+                  <p className="text-sm truncate">{item.slice(0, 20)}...</p>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-        {extended ? 
-        <div className="recent flex flex-col mt-7 cursor-pointer animate-fade-in" >
-              <p className='recent title mt-[30npx] mb-[20px]'>Recent history</p>
-          
-            {prevPrompts.map((item,index)=>{
-            return(
-                
-               <div onClick={()=>loaderPrompt(item)} key={index} className="recent-entry flex items-start gap-[10px] p-[10px] pr-5 rounded-[50px] text-[#282828] cursor-pointer  hover:bg-[#e2e6eb] transition-all duration-100">
-              
-                <img className='munu w-[20px]'  src={assets.message_icon}/>
-               <p>{item.slice(0,18)}...</p>
+
+        <div className="bottom space-y-4">
+          {['Help', 'Activity', 'Settings'].map((text, i) => {
+            const icons = [assets.question_icon, assets.history_icon, assets.setting_icon];
+            return (
+              <div
+                key={i}
+                className="flex items-center gap-3 p-3 rounded-full hover:bg-[#e2e6eb] cursor-pointer transition"
+              >
+                <img className="w-11 sm:w-5 " src={icons[i]} alt={text} />
+                {extended && <p className="text-sm">{text}</p>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Mobile Sidebar - Slides in from left */}
+      <div
+        className={`fixed inset-0 z-40 transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} sm:hidden`}
+      >
+        {/* Overlay */}
+        <div
+          className="absolute inset-0 bg-black bg-opacity-50"
+          onClick={toggleMobileMenu}
+        />
+
+        {/* Sidebar Panel */}
+        <div className="absolute left-0 top-0 w-72 h-full bg-[#f0f4f9] shadow-2xl flex flex-col justify-between py-8 px-6">
+          <div>
+            {/* Close button inside mobile sidebar */}
+            <div className="flex justify-end mb-8">
+              <img
+                onClick={toggleMobileMenu}
+                className="w-6 cursor-pointer"
+                src={assets.menu_icon}
+                alt="close"
+              />
             </div>
 
-            )
+            <div
+              onClick={() => { Newchat(); toggleMobileMenu(); }}
+              className="flex items-center gap-3 px-4 py-3 bg-[#e6eaf1] rounded-full cursor-pointer mb-8"
+            >
+              <img className="w-5" src={assets.plus_icon} alt="new" />
+              <p>New Chat</p>
+            </div>
 
+            <div className="recent space-y-3">
+              <p className="text-sm text-gray-500 mb-3">Recent</p>
+              {prevPrompts.map((item, index) => (
+                <div
+                  key={index}
+                  onClick={() => loadPrompt(item)}
+                  className="flex items-center gap-3 p-3 rounded-full hover:bg-[#e2e6eb] cursor-pointer"
+                >
+                  <img className="w-5" src={assets.message_icon} alt="msg" />
+                  <p className="text-sm truncate">{item.slice(0, 25)}...</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bottom space-y-4">
+            {['Help', 'Activity', 'Settings'].map((text, i) => {
+              const icons = [assets.question_icon, assets.history_icon, assets.setting_icon];
+              return (
+                <div
+                  key={i}
+                  className="flex items-center gap-3 p-3 rounded-full hover:bg-[#e2e6eb] cursor-pointer"
+                >
+                  <img className="w-5" src={icons[i]} alt={text} />
+                  <p className="text-sm">{text}</p>
+                </div>
+              );
             })}
-           
-        </div> :null
-}
-    </div>
-    <div className='bottom'>
-    <div className="bottom-item p-r-[10px] recent-entry flex items-center gap-2 p-2 p-r[40px] border-r[50px] text-[#282828] cursor-pointer hover:bg-[#e2e6eb]">
-        <img className='munu w-[20px]'  src={assets.question_icon}/>
-       {extended && <p>Help</p>} 
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-    </div>
-     <div className="bottom-item p-r-[10px] recent-entry flex items-center gap-2 p-2 p-r[40px] text-[#282828] cursor-pointer hover:bg-[#e2e6eb]">
-        <img className='munu w-[20px]'  src={assets.history_icon}/>
-          {extended && <p>Activity</p>} 
-
-    </div>
-     <div className="bottom-item p-r-[10px] recent-entry flex items-center gap-2 p-2 p-r[40px] text-[#282828] cursor-pointer  hover:bg-[#e2e6eb]">
-        <img className='munu w-[20px]'  src={assets.setting_icon}/>
-         {extended && <p>Setting</p>} 
-
-    </div>
-
-    </div>
-    
-    
-    </div>
-
-  {/*  Mobile Responsive */}
- 
-</>
-  )
-}
-
-export default Sidebar
+export default Sidebar;

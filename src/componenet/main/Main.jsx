@@ -15,7 +15,7 @@ const Main = () => {
 
         <div className='nav px-[20px] mt-3 sm:mt-0 sm:px-0 flex items-center justify-between text-[22px] p-[20px ] text-[#585858] rounded-[50%]'>
          
-            <p>Gemini</p>
+            <p className="ml-8">Gemini</p>
             
              <img  className="w-[40px] rounded-[50%] " src={assets.user_icon}/>
         </div>
