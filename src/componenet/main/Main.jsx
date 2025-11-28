@@ -82,7 +82,7 @@ const Main = () => {
         
         }
            
-          <div className="mainbottom absolute mt-4 sm:mt-0
+          <div className="mainbottom absolute mt-20 sm:mt-0
            bottom-0 w-full max-w-[900px] py-0 px-5 m-auto">
             <div className="searchBox bg-[#f0f4f9] py-[10px] px-5 rounded-[50px] flex justify-between flex-col sm:flex-row" >
               <input onChange={(e)=> setInput(e.target.value)} value={input} onKeyDown={(e)=>{
