@@ -4,9 +4,7 @@ import { Context } from '../../context/Context'
 
 const Main = () => {
   const [responsiveBar,setResponsiveBar]=useState(false)
-  const togglerBar=()=>{
-    setResponsiveBar(!responsiveBar)
-  }
+  
   const{onSent,recentPrompt,showResult,loading,resultData,setInput,input}=useContext(Context)
   return (
     <>
@@ -16,10 +14,9 @@ const Main = () => {
 
 
         <div className='nav px-[20px] mt-3 sm:mt-0 sm:px-0 flex items-center justify-between text-[22px] p-[20px ] text-[#585858] rounded-[50%]'>
-          <div className='flex flex-row-reverse gap-2'>
+         
             <p>Gemini</p>
-              <img onClick={togglerBar} className='munu w-[20px] block sm:hidden ml-[10px] transition-all duration-100 cursor-pointer' src={assets.menu_icon}/>
-            </div>
+            
              <img  className="w-[40px] rounded-[50%] " src={assets.user_icon}/>
         </div>
         <div className="maincontainermarker max-w-[900px] mx-auto ">
@@ -32,7 +29,7 @@ const Main = () => {
                 <p>Developed By Sajjad Hussain</p>
                 </div>
         
-        <div className="cards grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] gap-[15px] p-[20px]">
+        <div className="cards grid grid-cols-[repeat(auto-fill,_minmax(180px,_1fr))] gap-[15px] p-[20px] mb-7 sm:mb-[80px]">
             <div className="card h-[200px] p-[15px] bg-[#f0f4f9] rounded-[20px] relative cursor-pointer hover:bg-[#dfe4ea] transition-all duration-100">
                 <p className= 'text-[#585858] text-[17px]'>Suggest Beautiful places to see on an upcoming road trip</p>
                 <img className='w-[35px] p-[5px] absolute bg-white rounded-[20px] bottom-[10px] right-[10px]' src={assets.compass_icon} alt="" />
@@ -67,7 +64,7 @@ const Main = () => {
             <p>{recentPrompt}</p> 
             </div>
             <div className="result-data flex items-start gap-[8px] sm:gap-5">
-              <img className="w-[40px] sm:w-full" src={assets.gemini_icon}/>
+              <img className="w-[30px] sm:w-[50px]" src={assets.gemini_icon}/>
               {
                 loading?
                 <div className="loader w-full flex flex-col gap-[10px]">

@@ -7,6 +7,7 @@ import { Context } from '../../context/Context'
 const Sidebar = () => {
   const{onSent,prevPrompts,setRecentPrompt,Newchat} =useContext(Context)
     const [extended,setExtended]=useState(false)
+    const [mobileResponsive,setMobileResponsive]=useState(false)
     const sidebarToggler=()=>{
         setExtended(!extended)
     }
@@ -15,13 +16,16 @@ const loaderPrompt=async(prompt)=>{
   await onSent(prompt)
 
 }
+const MobileBarToggler=()=>{
+  setMobileResponsive(!mobileResponsive)
+}
 
   return (
-
+<>
     <div className='sidebar hidden min-h-[100vh] sm:inline-flex flex-col justify-between bg-[#f0f4f9] px-6 py-4'>
     <div className='top'>
         <img onClick={sidebarToggler} className='munu w-[20px] block ml-[10px] transition-all duration-100 cursor-pointer' src={assets.menu_icon}/>
-        <div onClick={()=>Newchat()} className='cursor-pointer newchat inline-flex mt-[50px] items-center gap-[10px] px-[15px] rounded-[50px] py-[10px] bg-[#e6eaf1] border text-[14px] text-gray-50 cursor-pointer'>
+        <div onClick={()=>Newchat()} className='newchat inline-flex mt-[50px] items-center gap-[10px] px-[15px] rounded-[50px] py-[10px] bg-[#e6eaf1] border text-[14px] text-gray-50 cursor-pointer'>
             <img className='munu w-[20px]' src={assets.plus_icon}/>
           {extended && <p className='text-black'>New Chat</p>}  
         </div>
@@ -64,7 +68,12 @@ const loaderPrompt=async(prompt)=>{
 
     </div>
     
+    
     </div>
+
+  {/*  Mobile Responsive */}
+ 
+</>
   )
 }
 
