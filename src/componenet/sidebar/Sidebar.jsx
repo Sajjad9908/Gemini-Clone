@@ -24,16 +24,16 @@ const Sidebar = () => {
       <div className="sm:hidden fixed top-4 left-4 z-50">
         <img
           onClick={toggleMobileMenu}
-          className="w-6 h-6 cursor-pointer"
+          className={`w-6 h-6 cursor-pointer ${mobileMenuOpen?'hidden' : undefined} `}
           src={assets.menu_icon}
           alt="menu"
         />
       </div>
 
       {/* Desktop Sidebar - Hidden on mobile */}
-      <div className={`hidden sm:flex flex-col justify-between bg-[#f0f4f9] px-6 py-8 min-h-screen transition-all duration-300 ${extended ? 'w-[200px]' : 'w-20'}`}>
+      <div className={`hidden sm:flex flex-col justify-between bg-[#f0f4f9] px-2 py-4 min-h-screen transition-all duration-300 ${extended ? 'w-[200px]' : 'w-20'}`}>
         <div className="top">
-          <div>
+          <div className="ml-4">
           <img
             onClick={toggleSidebar} className={`${mobileMenuOpen? 'none' :'block'} w-5 cursor-pointer mb-12`}
            
@@ -98,12 +98,17 @@ const Sidebar = () => {
           <div>
             {/* Close button inside mobile sidebar */}
             <div className="flex justify-end mb-8">
-              <img
+              {extended ? 
+             <img
                 onClick={toggleMobileMenu}
                 className="w-6 cursor-pointer"
                 src={assets.menu_icon}
                 alt="close"
               />
+              :
+              <p onClick={toggleMobileMenu} className="text-red-500 text-[22px] cursor-pointer">X</p> 
+            }
+             
             </div>
 
             <div
