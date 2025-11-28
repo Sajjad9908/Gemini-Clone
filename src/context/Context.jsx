@@ -25,6 +25,7 @@ const WordsTyping=(index,nextWord)=>{
     setShowResult(false)
   }
     const onSent=async(prompt)=>{
+      setInput('')
          setResultData('');
         setLoading(true)
         setShowResult(true)
