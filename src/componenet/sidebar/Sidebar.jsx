@@ -20,7 +20,7 @@ const Sidebar = () => {
 
   return (
     <>
-      {/* Hamburger Icon - Always visible on mobile */}
+     
       <div className="sm:hidden fixed top-4 left-4 z-50">
         <img
           onClick={toggleMobileMenu}
@@ -30,7 +30,7 @@ const Sidebar = () => {
         />
       </div>
 
-      {/* Desktop Sidebar - Hidden on mobile */}
+    
       <div className={`hidden sm:flex flex-col justify-between bg-[#f0f4f9] px-2 py-4 min-h-screen transition-all duration-300 ${extended ? 'w-[200px]' : 'w-20'}`}>
         <div className="top">
           <div className="ml-4">
@@ -83,20 +83,20 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Mobile Sidebar - Slides in from left */}
+   
       <div
         className={`fixed inset-0 z-40 transition-transform duration-300 ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full'} sm:hidden`}
       >
-        {/* Overlay */}
+      
         <div
           className="absolute inset-0 bg-black bg-opacity-50"
           onClick={toggleMobileMenu}
         />
 
-        {/* Sidebar Panel */}
+      
         <div className="absolute left-0 top-0 w-72 h-full bg-[#f0f4f9] shadow-2xl flex flex-col justify-between py-8 px-6">
           <div>
-            {/* Close button inside mobile sidebar */}
+          
             <div className="flex justify-end mb-8">
               {extended ? 
              <img
